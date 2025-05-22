@@ -32,8 +32,8 @@
 
 #include "audio_common/tts_node.hpp"
 #include "audio_common/wave_file.hpp"
-#include "audio_common_msgs/action/tts.hpp"
-#include "audio_common_msgs/msg/audio_stamped.hpp"
+#include "audio_common_pulse_msgs/action/tts.hpp"
+#include "audio_common_pulse_msgs/msg/audio_stamped.hpp"
 
 using namespace audio_common;
 using namespace std::chrono_literals;
@@ -49,7 +49,7 @@ TtsNode::TtsNode() : Node("tts_node") {
   this->frame_id_ = this->get_parameter("frame_id").as_string();
 
   this->player_pub_ =
-      this->create_publisher<audio_common_msgs::msg::AudioStamped>(
+      this->create_publisher<audio_common_pulse_msgs::msg::AudioStamped>(
           "audio", rclcpp::SensorDataQoS());
 
   // Action server
@@ -120,7 +120,7 @@ void TtsNode::execute_callback(
   std::vector<float> data(this->chunk_);
 
   // Initialize the audio message
-  audio_common_msgs::msg::AudioStamped msg;
+  audio_common_pulse_msgs::msg::AudioStamped msg;
   msg.header.frame_id = this->frame_id_;
 
   // Publish the audio data in chunks
@@ -134,7 +134,7 @@ void TtsNode::execute_callback(
       return;
     }
 
-    auto msg = audio_common_msgs::msg::AudioStamped();
+    auto msg = audio_common_pulse_msgs::msg::AudioStamped();
     msg.header.stamp = this->get_clock()->now();
     msg.audio.audio_data.float32_data = data;
     msg.audio.info.channels = wf.get_num_channels();

@@ -29,8 +29,8 @@
 #include <rclcpp/rclcpp.hpp>
 
 #include "audio_common/audio_player_node.hpp"
-#include "audio_common_msgs/msg/audio.hpp"
-#include "audio_common_msgs/msg/audio_stamped.hpp"
+#include "audio_common_pulse_msgs/msg/audio.hpp"
+#include "audio_common_pulse_msgs/msg/audio_stamped.hpp"
 
 using namespace audio_common;
 using std::placeholders::_1;
@@ -55,7 +55,7 @@ AudioPlayerNode::AudioPlayerNode() : Node("audio_player_node") {
   // Subscription to audio topic
   auto qos_profile = rclcpp::SensorDataQoS();
   this->audio_sub_ =
-      this->create_subscription<audio_common_msgs::msg::AudioStamped>(
+      this->create_subscription<audio_common_pulse_msgs::msg::AudioStamped>(
           "audio", qos_profile,
           std::bind(&AudioPlayerNode::audio_callback, this, _1));
 
@@ -72,7 +72,7 @@ AudioPlayerNode::~AudioPlayerNode() {
 }
 
 void AudioPlayerNode::audio_callback(
-    const audio_common_msgs::msg::AudioStamped::SharedPtr msg) {
+    const audio_common_pulse_msgs::msg::AudioStamped::SharedPtr msg) {
 
   // Create a unique stream key based on format, rate, and channels
   std::string stream_key = std::to_string(msg->audio.info.format) + "_" +

@@ -39,14 +39,14 @@
 #include <rclcpp_action/rclcpp_action.hpp>
 
 #include "audio_common/wave_file.hpp"
-#include "audio_common_msgs/action/tts.hpp"
-#include "audio_common_msgs/msg/audio_stamped.hpp"
+#include "audio_common_pulse_msgs/action/tts.hpp"
+#include "audio_common_pulse_msgs/msg/audio_stamped.hpp"
 
 namespace audio_common {
 
 class TtsNode : public rclcpp::Node {
 public:
-  using TTS = audio_common_msgs::action::TTS;
+  using TTS = audio_common_pulse_msgs::action::TTS;
   using GoalHandleTTS = rclcpp_action::ServerGoalHandle<TTS>;
 
   TtsNode();
@@ -54,7 +54,7 @@ public:
 private:
   int chunk_;
   std::string frame_id_;
-  rclcpp::Publisher<audio_common_msgs::msg::AudioStamped>::SharedPtr
+  rclcpp::Publisher<audio_common_pulse_msgs::msg::AudioStamped>::SharedPtr
       player_pub_;
   rclcpp_action::Server<TTS>::SharedPtr action_server_;
   std::mutex goal_lock_;

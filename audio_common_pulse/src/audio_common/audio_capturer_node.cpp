@@ -25,7 +25,7 @@
 #include <rclcpp/rclcpp.hpp>
 
 #include "audio_common/audio_capturer_node.hpp"
-#include "audio_common_msgs/msg/audio_stamped.hpp"
+#include "audio_common_pulse_msgs/msg/audio_stamped.hpp"
 
 using namespace audio_common;
 
@@ -81,7 +81,7 @@ AudioCapturerNode::AudioCapturerNode() : Node("audio_capturer_node") {
   }
 
   this->audio_pub_ =
-      this->create_publisher<audio_common_msgs::msg::AudioStamped>(
+      this->create_publisher<audio_common_pulse_msgs::msg::AudioStamped>(
           "audio", rclcpp::SensorDataQoS());
 
   RCLCPP_INFO(this->get_logger(), "AudioCapturer node started");
@@ -96,7 +96,7 @@ AudioCapturerNode::~AudioCapturerNode() {
 void AudioCapturerNode::work() {
   while (rclcpp::ok()) {
 
-    auto msg = audio_common_msgs::msg::AudioStamped();
+    auto msg = audio_common_pulse_msgs::msg::AudioStamped();
     msg.header.frame_id = this->frame_id_;
     msg.header.stamp = this->get_clock()->now();
 

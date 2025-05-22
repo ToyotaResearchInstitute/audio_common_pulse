@@ -1,2 +1,2 @@
-audio_common_msgs/AudioData audio_data
-audio_common_msgs/AudioInfo info
+audio_common_pulse_msgs/AudioData audio_data
+audio_common_pulse_msgs/AudioInfo info

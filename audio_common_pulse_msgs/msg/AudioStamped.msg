@@ -1,2 +1,2 @@
 std_msgs/Header header
-audio_common_msgs/Audio audio
+audio_common_pulse_msgs/Audio audio

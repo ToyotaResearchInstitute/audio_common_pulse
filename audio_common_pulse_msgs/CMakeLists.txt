@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(audio_common_msgs)
+project(audio_common_pulse_msgs)
 
 if(POLICY CMP0148)
   cmake_policy(SET CMP0148 OLD)

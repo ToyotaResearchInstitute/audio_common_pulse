@@ -29,8 +29,8 @@
 #include <thread>
 
 #include <ament_index_cpp/get_package_share_directory.hpp>
-#include <audio_common_msgs/msg/audio_stamped.hpp>
-#include <audio_common_msgs/srv/music_play.hpp>
+#include <audio_common_pulse_msgs/msg/audio_stamped.hpp>
+#include <audio_common_pulse_msgs/srv/music_play.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <std_srvs/srv/trigger.hpp>
 
@@ -58,9 +58,9 @@ private:
   std::condition_variable pause_cv_;
 
   // ROS 2 publisher and services
-  rclcpp::Publisher<audio_common_msgs::msg::AudioStamped>::SharedPtr
+  rclcpp::Publisher<audio_common_pulse_msgs::msg::AudioStamped>::SharedPtr
       player_pub_;
-  rclcpp::Service<audio_common_msgs::srv::MusicPlay>::SharedPtr play_service_;
+  rclcpp::Service<audio_common_pulse_msgs::srv::MusicPlay>::SharedPtr play_service_;
   rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr stop_service_;
   rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr pause_service_;
   rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr resume_service_;
@@ -68,8 +68,8 @@ private:
   // Methods
   void publish_audio(const std::string &file_path);
   void play_callback(
-      const std::shared_ptr<audio_common_msgs::srv::MusicPlay::Request> request,
-      std::shared_ptr<audio_common_msgs::srv::MusicPlay::Response> response);
+      const std::shared_ptr<audio_common_pulse_msgs::srv::MusicPlay::Request> request,
+      std::shared_ptr<audio_common_pulse_msgs::srv::MusicPlay::Response> response);
   void
   pause_callback(const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
                  std::shared_ptr<std_srvs::srv::Trigger::Response> response);

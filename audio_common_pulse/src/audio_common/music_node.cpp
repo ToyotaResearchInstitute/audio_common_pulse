@@ -28,8 +28,8 @@
 #include <thread>
 
 #include <ament_index_cpp/get_package_share_directory.hpp>
-#include <audio_common_msgs/msg/audio_stamped.hpp>
-#include <audio_common_msgs/srv/music_play.hpp>
+#include <audio_common_pulse_msgs/msg/audio_stamped.hpp>
+#include <audio_common_pulse_msgs/srv/music_play.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <std_srvs/srv/trigger.hpp>
 
@@ -53,11 +53,11 @@ MusicNode::MusicNode()
 
   // Publisher
   this->player_pub_ =
-      this->create_publisher<audio_common_msgs::msg::AudioStamped>(
+      this->create_publisher<audio_common_pulse_msgs::msg::AudioStamped>(
           "audio", rclcpp::SensorDataQoS());
 
   // Services
-  this->play_service_ = this->create_service<audio_common_msgs::srv::MusicPlay>(
+  this->play_service_ = this->create_service<audio_common_pulse_msgs::srv::MusicPlay>(
       "music_play", std::bind(&MusicNode::play_callback, this, _1, _2));
   this->stop_service_ = this->create_service<std_srvs::srv::Trigger>(
       "music_stop", std::bind(&MusicNode::stop_callback, this, _1, _2));
@@ -96,7 +96,7 @@ void MusicNode::publish_audio(const std::string &file_path) {
   while (!this->stop_music_) {
     while (wf.read(data, this->chunk_)) {
 
-      auto msg = audio_common_msgs::msg::AudioStamped();
+      auto msg = audio_common_pulse_msgs::msg::AudioStamped();
       msg.header.frame_id = this->frame_id_;
       msg.header.stamp = this->get_clock()->now();
       msg.audio.audio_data.float32_data = data;
@@ -128,8 +128,8 @@ void MusicNode::publish_audio(const std::string &file_path) {
 }
 
 void MusicNode::play_callback(
-    const std::shared_ptr<audio_common_msgs::srv::MusicPlay::Request> request,
-    std::shared_ptr<audio_common_msgs::srv::MusicPlay::Response> response) {
+    const std::shared_ptr<audio_common_pulse_msgs::srv::MusicPlay::Request> request,
+    std::shared_ptr<audio_common_pulse_msgs::srv::MusicPlay::Response> response) {
 
   if (this->is_thread_alive_) {
     RCLCPP_WARN(this->get_logger(), "There is other music playing");

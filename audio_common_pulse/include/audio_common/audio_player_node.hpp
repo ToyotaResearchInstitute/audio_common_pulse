@@ -27,7 +27,7 @@
 #include <portaudio.h>
 #include <rclcpp/rclcpp.hpp>
 
-#include "audio_common_msgs/msg/audio_stamped.hpp"
+#include "audio_common_pulse_msgs/msg/audio_stamped.hpp"
 
 namespace audio_common {
 
@@ -38,7 +38,7 @@ public:
 
 private:
   // ROS 2 subscription for audio messages
-  rclcpp::Subscription<audio_common_msgs::msg::AudioStamped>::SharedPtr
+  rclcpp::Subscription<audio_common_pulse_msgs::msg::AudioStamped>::SharedPtr
       audio_sub_;
 
   // PortAudio stream dictionary
@@ -50,7 +50,7 @@ private:
 
   // Methods
   void
-  audio_callback(const audio_common_msgs::msg::AudioStamped::SharedPtr msg);
+  audio_callback(const audio_common_pulse_msgs::msg::AudioStamped::SharedPtr msg);
   template <typename T>
   void write_data(const std::vector<T> &data, int channels, int chunk,
                   const std::string &stream_key);
